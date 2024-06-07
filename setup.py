@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="KillB-SDK",
+    name="killb-sdk-python",
     version="1.0.0",
     packages=find_packages(),
     requires=['requests'],
