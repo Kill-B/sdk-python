@@ -1,0 +1,12 @@
+name: Release Drafter
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  run:
+    uses: ./.github/workflows/release-drafter-shared.yaml
+    secrets: inherit
