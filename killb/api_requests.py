@@ -48,9 +48,9 @@ class ApiRequests:
         response = response_auth.json()
 
         if response_auth.status_code >= 200:
-            self.access_token = response.data.accessToken
+            self.access_token = response.accessToken
             self.headers["Authorization"] = f"Bearer {self.access_token}"
-            expires_in = response.data.expiresIn
+            expires_in = response.expiresIn
             self.token_expiry = datetime.now() + timedelta(seconds=expires_in)
         else:
             raise AuthenticationError(f"Authentication Failed: {response.text}")
