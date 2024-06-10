@@ -44,7 +44,7 @@ class ApiRequests:
 
     def authenticate(self):
         response_auth = re.post(url=f'{self.get_base_url()}/auth/login',
-                                data={"email": self.email, "password": self.password})
+                                data={"email": self.email, "password": self.password}, headers=self.headers)
         response = response_auth.json()
 
         if response_auth.status_code == 200:
@@ -53,7 +53,7 @@ class ApiRequests:
             expires_in = response.data.expiresIn
             self.token_expiry = datetime.now() + timedelta(seconds=expires_in)
         else:
-            raise AuthenticationError("Authentication Failed")
+            raise AuthenticationError(f"Authentication Failed: {response.text}")
 
     def refresh_token(self):
         if self.email and self.password:
