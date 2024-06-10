@@ -44,7 +44,7 @@ class ApiRequests:
 
     def authenticate(self):
         response_auth = re.post(url=f'{self.get_base_url()}/auth/login',
-                                data={"email": self.email, "password": self.password}, headers=self.headers)
+                                data={"email": self.email, "password": self.password}, headers={"x-api-key": self.api_key})
         response = response_auth.json()
 
         if response_auth.status_code == 200:
