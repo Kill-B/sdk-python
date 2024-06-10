@@ -47,7 +47,7 @@ class ApiRequests:
                                 data={"email": self.email, "password": self.password}, headers={"x-api-key": self.api_key})
         response = response_auth.json()
 
-        if response_auth.status_code == 200:
+        if response_auth.status_code >= 200:
             self.access_token = response.data.accessToken
             self.headers["Authorization"] = f"Bearer {self.access_token}"
             expires_in = response.data.expiresIn
