@@ -65,8 +65,10 @@ class ApiRequests:
         if self.environment == 'SANDBOX':
             self.base_url = 'https://teste-94u93qnn.uc.gateway.dev'
             return self.base_url
-        self.base_url = 'http://killb.app/api/v2'
-        return self.base_url
+        if self.environment == 'PRODUCTION':
+            self.base_url = 'http://killb.app/api/v2'
+            return self.base_url
+        raise KillBApiError('Environment not supported.')
 
     def token_expired(self):
         """
