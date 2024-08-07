@@ -3,6 +3,7 @@ from killb.account import Account
 from killb.user import User
 from killb.quotations import Quotation
 from killb.savings import Savings
+from killb.ramp import Ramps
 
 
 class Client:
@@ -37,3 +38,4 @@ class Client:
         self.User = User(self.api_requests)
         self.Quotation = Quotation(self.api_requests)
         self.Savings = Savings(self.api_requests)
+        self.Ramps = Ramps(self.api_requests)
