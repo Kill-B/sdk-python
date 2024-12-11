@@ -42,7 +42,7 @@ class CompanyData(TypedDict, total=False):
     establishedOn: Optional[str]
     phone: Optional[str]
     address: AddressData
-    mainOwnerUser: str
+    mainOwnerUser: Optional[str]
     ownerUsers: Optional[List[str]]
     naics: Optional[str]
     naicsDescription: Optional[str]
@@ -90,3 +90,4 @@ class UserCreateResponse(TypedDict, total=False):
     active: bool
     createdAt: str
     updatedAt: str
+    complianceUrl: str
