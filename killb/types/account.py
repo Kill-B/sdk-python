@@ -147,3 +147,4 @@ class AccountCreateResponse(TypedDict, total=False):
     externalId: Optional[str]
     createdAt: str
     updatedAt: str
+    complianceUrl: str
