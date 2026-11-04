@@ -4,6 +4,7 @@ from killb.user import User
 from killb.quotations import Quotation
 from killb.savings import Savings
 from killb.ramp import Ramps
+from killb.webhook import Webhook
 
 
 class Client:
@@ -25,13 +26,16 @@ class Client:
             An instance of the Quotation class to interact with quotation-related API endpoints.
         Savings : Savings
             An instance of the Savings class to interact with savings-related API endpoints.
+        Webhook : Webhook
+            Verifies the signature of webhooks sent by KillB, using webhook_secret.
 
         Methods
         -------
-        __init__(environment: str, email: str, password: str, api_key: str = None)
+        __init__(environment: str, email: str, password: str, api_key: str = None, webhook_secret: str = None)
             Initializes the Client with the given credentials and authenticates the user.
     """
-    def __init__(self, environment: str, email: str, password: str, api_key: str = None):
+    def __init__(self, environment: str, email: str, password: str, api_key: str = None,
+                 webhook_secret: str = None):
         self.api_requests = ApiRequests(environment=environment, email=email, password=password, api_key=api_key)
         self.api_requests.authenticate()
         self.Account = Account(self.api_requests)
@@ -39,3 +43,4 @@ class Client:
         self.Quotation = Quotation(self.api_requests)
         self.Savings = Savings(self.api_requests)
         self.Ramps = Ramps(self.api_requests)
+        self.Webhook = Webhook(webhook_secret)
