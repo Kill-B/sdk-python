@@ -97,6 +97,32 @@ You can create account using the Account class:
     print("Account created successfully:", account)
 ````
 
+### Verifying webhooks
+
+KillB signs every webhook with the `X-KillB-Signature` header (`t=<unix seconds>,v1=<HMAC-SHA256>`). Verify it against the raw body, exactly as received, with your webhook secret. `Webhook` doesn't call the API, so you don't need a `Client` for it:
+
+```python
+import json
+
+from fastapi import FastAPI, HTTPException, Request
+from killb.webhook import Webhook
+
+app = FastAPI()
+webhook = Webhook(secret="your_webhook_secret")
+
+
+@app.post("/webhooks/killb")
+async def killb_webhook(request: Request):
+    raw_body = await request.body()
+    if not webhook.verify_signature(raw_body, request.headers):
+        raise HTTPException(status_code=401, detail="Invalid signature")
+    event = json.loads(raw_body)
+    # handle the event, skipping ids you have already processed
+    return {"received": True}
+```
+
+Don't pass a re-serialized body (`json.dumps(...)`): spacing and escaping change and the signature won't match. Signatures older than 5 minutes are rejected; pass `tolerance_seconds` to change it. With a `Client`, pass `webhook_secret=` and use `client.Webhook.verify_signature(...)`.
+
 ------
 
 For more detailed documentation and examples, please refer to the [API documentation](https://killbapi.stoplight.io/docs/killb-v2/365bbddbae725-api-version-2-0-new-features-overview).
