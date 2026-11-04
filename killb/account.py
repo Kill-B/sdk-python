@@ -1,3 +1,5 @@
+from typing import List
+
 from killb.types.account import AccountData, AccountCreateResponse, AccountUpdateData
 from killb.api_requests import ApiRequests
 
@@ -157,7 +159,7 @@ class Account:
         """
         return self.api_requests.request(method="GET", endpoint=f"accounts/{account_id}")
 
-    def get_by_user(self, user_id: str) -> AccountCreateResponse:
+    def get_by_user(self, user_id: str) -> List[AccountCreateResponse]:
         """
             Retrieves accounts associated with a user ID.
 
@@ -168,7 +170,7 @@ class Account:
 
             Returns
             -------
-            AccountCreateResponse
-                The response from the API as a dictionary.
+            List[AccountCreateResponse]
+                The user's accounts, as a list of dictionaries.
         """
-        return self.api_requests.request(method="GET", endpoint=f"accounts/{user_id}")
+        return self.api_requests.request(method="GET", endpoint=f"accounts/userId/{user_id}")
